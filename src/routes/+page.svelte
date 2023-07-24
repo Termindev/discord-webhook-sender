@@ -1,6 +1,6 @@
 <script lang="ts">
   import axios from "axios";
-  const webhookUrl = "WEBHOOKURL";
+  const webhookUrl = "";
   let message: string | undefined;
   let title: string | undefined;
   let description: string | undefined;
@@ -17,9 +17,6 @@
       username?: string;
       embeds?: object[];
     } = {};
-
-    const formData = new FormData();
-    formData.append("image", imageInput.files[0]);
 
     if (message) obj.content = message;
     if (username) obj.username = username;
@@ -70,10 +67,6 @@
   <label>
     <h2>Footer</h2>
     <input type="text" bind:value={footer.text} />
-  </label>
-  <label>
-    <h2>Footer image</h2>
-    <input type="file" bind:this={imageInput} name="image" />
   </label>
   <button type="submit">Click</button>
 </form>
