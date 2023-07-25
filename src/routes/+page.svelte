@@ -1,14 +1,16 @@
 <script lang="ts">
   import axios from "axios";
-  const webhookUrl = "";
-  let message: string | undefined;
-  let title: string | undefined;
-  let description: string | undefined;
-  let username: string | undefined;
-  let url: string | undefined;
-  let color: string | undefined;
+  const webhookUrl =
+    "https://discord.com/api/webhooks/1130183711330160660/wFu1ql_8F1cNdcM-Pov-PXT2M_ZWu1ptuGtMvBJV0K6TptkBOl-9CHMapSxZki6gyyTk";
+
+  let message: string;
+  let title: string;
+  let description: string;
+  let username: string;
+  let url: string;
+  let hexColor: string;
   let footer: { text?: string; icon_url?: string } = {};
-  let imageInput: HTMLInputElement;
+  let form: HTMLFormElement;
 
   const submit = async () => {
     console.log("Sending");
@@ -18,27 +20,31 @@
       embeds?: object[];
     } = {};
 
+    hexColor = hexColor?.replace("#", "");
+    const color = parseInt(hexColor, 16);
+
     if (message) obj.content = message;
     if (username) obj.username = username;
-    if (title || description || url || color || footer.text)
+    if (title || description || url || hexColor || footer.text)
       obj.embeds = [{ title, description, url, color, footer }];
-    console.log(obj);
+
+    // console.log(obj); // For Development
+
     try {
-      const response = await axios.post(webhookUrl, obj);
+      await axios.post(webhookUrl, obj);
       console.log("Message sent to Discord webhook");
     } catch (error) {
       console.error("Error sending message to Discord webhook:", error);
     }
-    message = undefined;
-    title = undefined;
-    description = undefined;
-    url = undefined;
-    color = undefined;
+
+    // Value resets
+
+    form.reset();
   };
 </script>
 
 <h1>Webhook sender</h1>
-<form on:submit={submit}>
+<form on:submit={submit} bind:this={form}>
   <label>
     <h2>Message</h2>
     <input type="text" bind:value={message} />
@@ -62,7 +68,7 @@
   </label>
   <label>
     <h2>Color</h2>
-    <input type="text" bind:value={color} />
+    <input type="text" bind:value={hexColor} />
   </label>
   <label>
     <h2>Footer</h2>
