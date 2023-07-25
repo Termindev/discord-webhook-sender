@@ -1,7 +1,6 @@
 <script lang="ts">
   import axios from "axios";
-  const webhookUrl =
-    "https://discord.com/api/webhooks/1130183711330160660/wFu1ql_8F1cNdcM-Pov-PXT2M_ZWu1ptuGtMvBJV0K6TptkBOl-9CHMapSxZki6gyyTk";
+  const webhookUrl = "";
 
   let message: string;
   let title: string;
